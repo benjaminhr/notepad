@@ -1,16 +1,17 @@
-# notepad
+## notepad
 ### by karmjit and benjamin 🌎
+---
 
-- ideas: 
-    - stage1: 
-        - open and edit files
-        - GUI
+### Ideas
+- stage_1: 
+    - [ ] GUI
+    - [ ] Read and write files
 
-    - stage2: 
-        - WYSIWG editor
+- stage_2: 
+    - [ ] WYSIWG editor
 
-    - stage3:
-        - Shared documents (Real-time)
-        - Database
-        - Users
+- stage_3:
+    - [ ] Shared documents (Real-time)
+    - [ ] Database
+    - [ ] Users
 
