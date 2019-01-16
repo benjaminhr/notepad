@@ -5,7 +5,7 @@
 To start project: 
     1. `source bin/activate` creates virtual environment to isolate packages and python version
     2. `pip install -r requirements.txt` installs packages 
-    3. `python3 main.py` runs program
+    3. `python3 start.py` runs program
 
 ### Ideas
 - stage_1: 
