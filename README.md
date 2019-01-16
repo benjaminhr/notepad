@@ -15,6 +15,7 @@
 - stage_2: 
     - [ ] WYSIWG editor
     - [ ] Project folder navigation
+    - [ ] Write tests
 
 - stage_3:
     - [ ] Shared documents (Real-time)
