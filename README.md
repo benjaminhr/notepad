@@ -1,5 +1,5 @@
-## notepad
-### by karmjit and benjamin 🌎
+### notepad
+#### by karmjit and benjamin 🌎
 ---
 
 ### To start project: 
@@ -14,9 +14,10 @@
 
 - stage_2: 
     - [ ] WYSIWG editor
+    - [ ] Project folder navigation
 
 - stage_3:
-    - [ ] Project folder navigation
     - [ ] Shared documents (Real-time)
     - [ ] Database
+	- [ ] Shortcut keys & Code generation (E.g. Java getters)
     - [ ] Users
