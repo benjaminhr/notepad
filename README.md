@@ -11,7 +11,7 @@
     - [ ] WYSIWG editor
 
 - stage_3:
+	- [ ] Project folder navigation
     - [ ] Shared documents (Real-time)
     - [ ] Database
     - [ ] Users
-
