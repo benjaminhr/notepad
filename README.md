@@ -1,5 +1,5 @@
 # notepad
-### by karmjit and benjamin
+### by karmjit and benjamin 🌎
 
 - ideas: 
     - stage1: 
