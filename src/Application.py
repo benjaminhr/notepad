@@ -1,19 +1,8 @@
 # here the main applciation will live
 # mainly for imported a class, etc and using it once
 
-from tkinter import Tk, filedialog, Frame, Button, Text, INSERT, LEFT, X, BOTH
-
-def openFile():
-  # opens a panel asking the user to select a file
-  # NOTICE: It can throw an exception if you close the panel
-  file = filedialog.askopenfilename(title = "Select file")
-  print("Opening file " + file)
-
-def saveFile():
-  # opens a "save as" panel
-  # NOTICE: It can throw an exception if you close the panel
-  fileToSaveAs = filedialog.asksaveasfilename(title = "Select file",filetypes = (("Text files","*.txt"),("all files","*.*")))
-  print("Saving text to file " + fileToSaveAs)
+from tkinter import Tk, Frame, Button, Text, INSERT, LEFT, X, BOTH
+from .File import File
 
 def start():
   window = Tk()
@@ -29,11 +18,11 @@ def start():
   toolbar = Frame(window)
   toolbar.pack(fill=X, padx=7, pady=7)
 
-  openFileBtn = Button(toolbar, text="Open File", command=openFile)
+  openFileBtn = Button(toolbar, text="Open File", command=File.open)
   openFileBtn.pack(side=LEFT)
 
   # padding is added to space out buttons
-  saveFileBtn = Button(toolbar, text="Save File", command=saveFile)
+  saveFileBtn = Button(toolbar, text="Save File", command=File.save)
   saveFileBtn.pack(side=LEFT, padx=5)
 
   textBox = Text(window)
