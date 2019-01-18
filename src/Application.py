@@ -2,7 +2,17 @@
 # mainly for imported a class, etc and using it once
 
 from tkinter import *
+from tkinter import messagebox
 from .File import File
+import atexit
+
+def saveBeforeExit(textbox):
+	userWantsToSave = messagebox.askyesno("Unsaved Text", 
+						"Do you want to save the text before exiting?")
+	if userWantsToSave:
+		File.save(textbox)
+	else:
+		print("Exited without saving")
 
 def start():
   window = Tk()
@@ -31,6 +41,8 @@ def start():
     undo = True,
   )
 
+  atexit.register(lambda: saveBeforeExit(textbox))
+
   file = Menu(menu)
   file.add_command(label = 'Open', command = lambda: File.open(textbox))
   file.add_command(label = 'Save', command = lambda: File.save(textbox))
@@ -39,5 +51,3 @@ def start():
 
   # keeps window open
   window.mainloop()
-
-  
