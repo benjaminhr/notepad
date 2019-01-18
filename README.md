@@ -9,16 +9,17 @@
 
 ### Ideas
 - stage_1: 
-    - [ ] GUI
-    - [ ] Read and write files
+    - [x] GUI
+    - [x] Read and write files
 
 - stage_2: 
-    - [ ] WYSIWG editor
+    - [ ] Rich text editor
     - [ ] Project folder navigation
+    - [ ] Ask user to save before exiting
     - [ ] Write tests
 
 - stage_3:
     - [ ] Shared documents (Real-time)
     - [ ] Database
-	- [ ] Shortcut keys & Code generation (E.g. Java getters)
+    - [ ] Shortcut keys & Code generation (E.g. Java getters)
     - [ ] Users
