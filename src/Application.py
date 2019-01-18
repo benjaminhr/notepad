@@ -1,16 +1,13 @@
 # here the main applciation will live
 # mainly for imported a class, etc and using it once
 
-from tkinter import Tk, Frame, Button, INSERT, LEFT, X, BOTH, Menu, Text
+from tkinter import *
 from .File import File
 
 def start():
   window = Tk()
   window.title("Notepad")
-
-  # window size
-  window.geometry("500x500")
-
+  window.geometry("550x700")
   # forces window to front
   window.attributes("-topmost", True)
 
@@ -18,7 +15,21 @@ def start():
   window.config(menu=menu)
 
   textbox = Text(window)
-  textbox.pack(expand=True, fill=BOTH, padx=7, pady=(0,7))
+  textbox.pack(expand=True, fill=BOTH, pady=(0,7))
+  textbox.config(
+    padx = 25,
+    pady = 25, 
+    borderwidth = 0,
+    font = "{Courier} 16",
+    foreground = "white",
+    background = "black",
+    insertbackground = "white", # cursor
+    selectforeground = "grey", # selection
+    selectbackground = "#008000",
+    wrap = WORD, # use word wrapping
+    width = 64,
+    undo = True,
+  )
 
   file = Menu(menu)
   file.add_command(label = 'Open', command = lambda: File.open(textbox))
@@ -26,20 +37,7 @@ def start():
   file.add_command(label = 'Exit', command = lambda: exit())
   menu.add_cascade(label = 'File', menu = file)
 
+  # keeps window open
   window.mainloop()
 
-  # padx and pady set x and y padding
-  # toolbar = Frame(window)
-  # toolbar.pack(fill=X, padx=7, pady=7)
-
-  # create textbox with file contents and name
-
-  # openFileBtn = Button(toolbar, text="Open File", command=File.open)
-  # openFileBtn.pack(side=LEFT)
-
-  # padding is added to space out buttons
-  # saveFileBtn = Button(toolbar, text="Save File", command=File.save)
-  # saveFileBtn.pack(side=LEFT, padx=5)
-
   
-  # keeps window open
