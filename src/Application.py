@@ -1,7 +1,7 @@
 # here the main applciation will live
 # mainly for imported a class, etc and using it once
 
-from tkinter import Tk, Frame, Button, INSERT, LEFT, X, BOTH, Menu
+from tkinter import Tk, Frame, Button, INSERT, LEFT, X, BOTH, Menu, Text
 from .File import File
 
 def start():
@@ -17,8 +17,11 @@ def start():
   menu = Menu(window)
   window.config(menu=menu)
 
+  textbox = Text(window)
+  textbox.pack(expand=True, fill=BOTH, padx=7, pady=(0,7))
+
   file = Menu(menu)
-  file.add_command(label = 'Open', command = File.open)
+  file.add_command(label = 'Open', command = lambda: File.open(textbox))
   file.add_command(label = 'Save', command = File.save)
   file.add_command(label = 'Exit', command = lambda:exit())
   menu.add_cascade(label = 'File', menu = file)
