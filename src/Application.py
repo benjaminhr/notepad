@@ -44,8 +44,8 @@ def start():
   atexit.register(lambda: saveBeforeExit(textbox))
 
   file = Menu(menu)
-  file.add_command(label = 'Open', command = lambda: File.open(textbox))
-  file.add_command(label = 'Save', command = lambda: File.save(textbox))
+  file.add_command(label = 'Open', command = lambda: File.open(window, textbox))
+  file.add_command(label = 'Save', command = lambda: File.save(window, textbox))
   file.add_command(label = 'Exit', command = lambda: exit())
   menu.add_cascade(label = 'File', menu = file)
 

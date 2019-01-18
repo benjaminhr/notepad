@@ -1,3 +1,4 @@
+import os
 from tkinter import filedialog, Text, BOTH, INSERT, END
 from tkinter.filedialog import askopenfilename
 
@@ -6,8 +7,8 @@ class File:
     textbox.delete('1.0', END)
     textbox.insert(INSERT, contents or "Type here...")
 
-  def save(textbox):
-    name = filedialog.asksaveasfilename(
+  def save(window, textbox):
+    path = filedialog.asksaveasfilename(
       title = "Select file",
       filetypes = (("Text files","*.txt"), ("all files","*.*"))
     )
@@ -19,33 +20,35 @@ class File:
           - Saves contents to a file with name '()' the first time
           - Throws FileNotFoundError the afterwards time.
     """
-    name = ''.join(name)
+    path = ''.join(name)
 
     try:
-      with open(name, 'w') as toSaveAsFile:
-        print("Saving text to file " + name)
+      with open(path, 'w') as toSaveAsFile:
+        print("Saving text to path " + path)
         toSaveAsFile.write(contents);
-        print("Text:\n" + contents)
+
     except FileNotFoundError as e:
         print("Could not save text to file")
         print(e)
 
-  def open(textbox):
-    name = askopenfilename(
+  def open(window, textbox):
+    path = askopenfilename(
       filetypes = (("Text File", "*.txt"), ("All Files","*.*")),
       title = "Choose a file."
     )
 
     # Required as sometimes it opens up a '()' file if it exists
-    name = ''.join(name)
+    path = ''.join(path)
 
     try:
-      with open(name, 'r') as uploadedFile:
-        print ("Reading file  " + name)
+      with open(path, 'r') as uploadedFile:
+        print ("Reading file  " + path)
+
+        head, tail = os.path.split(path)
+        window.title(tail)
         contents = uploadedFile.read()
         File.updateTextBox(textbox, contents)
-        print("Text:\n" + contents)
+
     except FileNotFoundError as e:
-      # can also be thrown when the panel asking for a file is closed directly
       print("Could not open file.")
       print(e)
