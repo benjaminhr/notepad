@@ -20,11 +20,13 @@ class File:
           - Saves contents to a file with name '()' the first time
           - Throws FileNotFoundError the afterwards time.
     """
-    path = ''.join(name)
+    path = ''.join(path)
 
     try:
       with open(path, 'w') as toSaveAsFile:
         print("Saving text to path " + path)
+        head, strippedPath = os.path.split(path)
+        window.title(strippedPath)
         toSaveAsFile.write(contents);
 
     except FileNotFoundError as e:
@@ -44,8 +46,8 @@ class File:
       with open(path, 'r') as uploadedFile:
         print ("Reading file  " + path)
 
-        head, tail = os.path.split(path)
-        window.title(tail)
+        head, strippedPath = os.path.split(path)
+        window.title(strippedPath)
         contents = uploadedFile.read()
         File.updateTextBox(textbox, contents)
 
