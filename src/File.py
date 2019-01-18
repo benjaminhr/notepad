@@ -1,5 +1,5 @@
 import os
-from tkinter import filedialog, Text, BOTH, INSERT, END
+from tkinter import *
 from tkinter.filedialog import askopenfilename
 
 class File:
@@ -35,7 +35,6 @@ class File:
 
   def open(window, textbox):
     path = askopenfilename(
-      filetypes = (("Text File", "*.txt"), ("All Files","*.*")),
       title = "Choose a file."
     )
 
@@ -44,13 +43,13 @@ class File:
 
     try:
       with open(path, 'r') as uploadedFile:
-        print ("Reading file  " + path)
-
-        head, strippedPath = os.path.split(path)
-        window.title(strippedPath)
         contents = uploadedFile.read()
         File.updateTextBox(textbox, contents)
+        head, strippedPath = os.path.split(path)
+        window.title(strippedPath)
+        
+        print ("Reading file  " + path)
 
-    except FileNotFoundError as e:
-      print("Could not open file.")
+    except Exception as e:
+      messagebox.showerror("Error", "Could not open file.")
       print(e)
