@@ -7,36 +7,45 @@ class File:
     textbox.insert(INSERT, contents or "Type here...")
 
   def save(textbox):
-    # NOTICE: It can throw an exception if you close the panel
+    name = filedialog.asksaveasfilename(
+      title = "Select file",
+      filetypes = (("Text files","*.txt"), ("all files","*.*"))
+    )
+
+    # "end-1c" removes extra new line character that a normal end adds
+    contents = textbox.get("1.0", "end-1c")
+
+    """ required as otherwise the following happens:
+          - Saves contents to a file with name '()' the first time
+          - Throws FileNotFoundError the afterwards time.
+    """
+    name = ''.join(name)
+
     try:
-      name = filedialog.asksaveasfilename(
-        title = "Select file",
-        filetypes = (("Text files","*.txt"), ("all files","*.*"))
-      )
-
-      print("Saving text to file " + name)
-
-      # "end-1c" removes extra new line character that a normal end adds
-      contents = textbox.get("1.0", "end-1c")
-      print("Text:\n" + contents)
-
       with open(name, 'w') as toSaveAsFile:
+        print("Saving text to file " + name)
         toSaveAsFile.write(contents);
-    except Exception as e:
-      print(e)
-  
+        print("Text:\n" + contents)
+    except FileNotFoundError as e:
+        print("Could not save text to file")
+        print(e)
 
   def open(textbox):
     name = askopenfilename(
       filetypes = (("Text File", "*.txt"), ("All Files","*.*")),
       title = "Choose a file."
     )
-    print ("file name: " + name)
-    
-    # try if unknown file or closes without choosing a file
+
+    # Required as sometimes it opens up a '()' file if it exists
+    name = ''.join(name)
+
     try:
       with open(name, 'r') as uploadedFile:
+        print ("Reading file  " + name)
         contents = uploadedFile.read()
         File.updateTextBox(textbox, contents)
-    except Exception as e: 
+        print("Text:\n" + contents)
+    except FileNotFoundError as e:
+      # can also be thrown when the panel asking for a file is closed directly
+      print("Could not open file.")
       print(e)
