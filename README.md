@@ -22,4 +22,5 @@
     - [ ] Shared documents (Real-time)
     - [ ] Database
     - [ ] Shortcut keys & Code generation (E.g. Java getters)
+    - [ ] Show line numbers
     - [ ] Users
