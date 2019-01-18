@@ -22,8 +22,8 @@ def start():
 
   file = Menu(menu)
   file.add_command(label = 'Open', command = lambda: File.open(textbox))
-  file.add_command(label = 'Save', command = File.save)
-  file.add_command(label = 'Exit', command = lambda:exit())
+  file.add_command(label = 'Save', command = lambda: File.save(textbox))
+  file.add_command(label = 'Exit', command = lambda: exit())
   menu.add_cascade(label = 'File', menu = file)
 
   window.mainloop()
