@@ -1,6 +1,6 @@
 import os
 from tkinter import *
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 class File:
   def updateTextBox(textbox, contents):
@@ -8,19 +8,10 @@ class File:
     textbox.insert(INSERT, contents or "Type here...")
 
   def save(window, textbox):
-    path = filedialog.asksaveasfilename(
-      title = "Select file",
-      filetypes = (("Text files","*.txt"), ("all files","*.*"))
-    )
-
+    path = asksaveasfilename(title = "Select file")
+    path = ''.join(path)
     # "end-1c" removes extra new line character that a normal end adds
     contents = textbox.get("1.0", "end-1c")
-
-    """ required as otherwise the following happens:
-          - Saves contents to a file with name '()' the first time
-          - Throws FileNotFoundError the afterwards time.
-    """
-    path = ''.join(path)
 
     try:
       with open(path, 'w') as toSaveAsFile:
@@ -34,12 +25,8 @@ class File:
         print(e)
 
   def open(window, textbox):
-    path = askopenfilename(
-      title = "Choose a file."
-    )
-
-    # Required as sometimes it opens up a '()' file if it exists
-    path = ''.join(path)
+    path = askopenfilename(title = "Choose a file.")
+    path = ''.join(path)   
 
     try:
       with open(path, 'r') as uploadedFile:
