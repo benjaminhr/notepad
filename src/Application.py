@@ -41,19 +41,6 @@ class GUI(App, Frame):
 
     atexit.register(self.saveBeforeExit)
 
-  def setWindowTitle(self, title):
-    self.window.title(title)
-
-  @property
-  def text(self):
-    # "end-1c" removes extra new line character that a normal end adds 
-    return self.textbox.get("1.0", "end-1c")
-
-  @text.setter
-  def text(self, text):
-    self.textbox.delete('1.0', END)
-    self.textbox.insert(INSERT, str(text) or "Type here...")
-
   def __setupLayout(self):
     self.window.columnconfigure(0, weight=1)
     self.window.rowconfigure(0, weight=1)
@@ -89,20 +76,38 @@ class GUI(App, Frame):
       width = 64,
       undo = True
     )
-  
-  def saveBeforeExit(self):
-    userWantsToSave = False
 
-    if self.text:
+  def setWindowTitle(self, title):
+    self.window.title(title)
+
+  @property
+  def text(self):
+    # "end-1c" removes extra new line character that a normal end adds 
+    return self.textbox.get("1.0", "end-1c")
+
+  @text.setter
+  def text(self, text):
+    self.textbox.delete('1.0', END)
+    self.textbox.insert(INSERT, str(text) or "Type here...")
+
+  @property
+  def textModified(self):
+    return self.textbox.edit_modified()
+
+  @textModified.setter
+  def textModified(self, flag):
+    self.textbox.edit_modified(flag)
+
+  def saveBeforeExit(self):
+    if self.textModified and (self.filePath or self.text) :
       userWantsToSave = messagebox.askyesno(
         "Unsaved Text", 
         "Do you want to save the text before exiting?"
       )
-    
-    if userWantsToSave:
-      File.save(self)
-    else:
-      print("Exited without saving")
+      if userWantsToSave:
+        File.save(self)
+      else:
+        print("Exited without saving")
 
 def start():
   app = GUI()

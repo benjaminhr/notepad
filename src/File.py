@@ -20,7 +20,7 @@ class File:
         head, strippedPath = os.path.split(path)
         app.setWindowTitle(strippedPath)
         toSaveAsFile.write(contents);
-
+        app.textModified = False
     except FileNotFoundError as e:
         print("Could not save text to file")
         print(e)
@@ -48,6 +48,9 @@ class File:
 
         head, strippedPath = os.path.split(path)
         app.setWindowTitle(strippedPath)
+        app.textModified = False
+        # empties the undo stack
+        app.textbox.edit_reset()
 
     except FileNotFoundError as e0:
       print("Error", "Could not open file.",e0)
