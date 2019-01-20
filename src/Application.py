@@ -17,23 +17,27 @@ class App:
   def filePath(self, filePath):
     self.__filePath = filePath
 
-class GUI(App):
+class GUI(App, Frame):
 
-  def __init__(self, window):
+  def __init__(self, window=None):
+    Frame.__init__(self,window)
     App.__init__(self)
 
-    window.title("Notepad")
-    window.geometry("550x700")
-    window.attributes("-topmost", True)
-    self.window = window
+    self.grid(sticky=N+S+E+W)
 
-    self.menu = Menu(self.window)
-    self.window.config(menu=self.menu)
-    self.__setupMenu(self.menu)
+    self.window = self.winfo_toplevel()
+    self.window.title("Notepad")
+    self.window.geometry("550x700")
+    self.window.attributes("-topmost", True)
 
-    self.textbox = Text(window)
-    GUI.__setupTextbox(self.textbox)
+    self.menu = Menu(self.window, bd=0)
+    self.window['menu'] = self.menu
+    self.__setupMenu()
 
+    self.textbox = Text(self)
+    self.__setupTextbox()
+
+    self.__setupLayout()
     atexit.register(self.saveBeforeExit)
 
   def setWindowTitle(self, title):
@@ -47,22 +51,33 @@ class GUI(App):
   @text.setter
   def text(self, text):
     self.textbox.delete('1.0', END)
-    self.textbox.insert(INSERT, text or "Type here...")
+    self.textbox.insert(INSERT, str(text) or "Type here...")
 
-  def __setupMenu(self, menu):
-    file = Menu(menu)
+  def __setupLayout(self):
+    self.window.columnconfigure(0, weight=1)
+    self.window.rowconfigure(0, weight=1)
+
+    self.columnconfigure(0,weight=1)
+    self.rowconfigure(0, weight=1)
+
+    self.textbox.columnconfigure(0, weight=1)
+    self.textbox.rowconfigure(0, weight=1)
+
+  def __setupMenu(self):
+    file = Menu(self.menu, tearoff=0, bd=0, activeborderwidth=0)
     file.add_command(label = 'Open', command = lambda: File.open(self))
     file.add_command(label = 'Save', command = lambda: File.save(self))
     file.add_command(label = 'Save As', command = lambda: File.saveAs(self))
     file.add_command(label = 'Exit', command = lambda: exit())
-    menu.add_cascade(label = 'File', menu = file)
+    self.menu.add_cascade(label = 'File', menu = file)
 
-  def __setupTextbox(textbox):
-    textbox.pack(expand=True, fill=BOTH, pady=(0,7))
-    textbox.config(
-      padx = 25,
-      pady = 25, 
+  def __setupTextbox(self):
+    self.textbox.grid(row=0, column=0, sticky=N+E+S+W)
+    self.textbox.config(
+      padx = 10,
+      pady = 10,
       borderwidth = 0,
+      highlightthickness = 0,
       font = "{Courier} 16",
       foreground = "white",
       background = "black",
@@ -71,7 +86,7 @@ class GUI(App):
       selectbackground = "#008000",
       wrap = WORD, # use word wrapping
       width = 64,
-      undo = True,
+      undo = True
     )
   
   def saveBeforeExit(self):
@@ -89,8 +104,5 @@ class GUI(App):
       print("Exited without saving")
 
 def start():
-  window = Tk()
-  GUI(window)
-  window.mainloop()
-  
- 
+  app = GUI()
+  app.mainloop()

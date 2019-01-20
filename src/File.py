@@ -1,4 +1,5 @@
 import os
+import sys
 from tkinter import *
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
@@ -10,9 +11,6 @@ class File:
       app.filePath = path
     elif path is None:
       path = app.filePath
-
-    print("PT:" + path)
-    print(app.filePath)
 
     contents = app.text
 
@@ -51,6 +49,8 @@ class File:
         head, strippedPath = os.path.split(path)
         app.setWindowTitle(strippedPath)
 
-    except Exception as e:
-      messagebox.showerror("Error", "Could not open file.")
-      print(e)
+    except FileNotFoundError as e0:
+      print("Error", "Could not open file.",e0)
+    except Exception as e1:
+      print("ERROR","Unpredicted Error")
+      print(e1, file=sys.stderr)
