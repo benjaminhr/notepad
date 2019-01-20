@@ -3,7 +3,6 @@ from tkinter import messagebox
 from .File import File
 import atexit
 
-# Will contain the states for the application.
 class App:
 
   def __init__(self):
@@ -29,6 +28,7 @@ class GUI(App, Frame):
     self.window.title("Notepad")
     self.window.geometry("550x700")
     self.window.attributes("-topmost", True)
+    self.window.protocol("WM_DELETE_WINDOW", exit)
 
     self.menu = Menu(self.window, bd=0)
     self.window['menu'] = self.menu
@@ -38,6 +38,7 @@ class GUI(App, Frame):
     self.__setupTextbox()
 
     self.__setupLayout()
+
     atexit.register(self.saveBeforeExit)
 
   def setWindowTitle(self, title):
