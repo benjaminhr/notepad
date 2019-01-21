@@ -7,20 +7,4 @@
 2. ```pip install -r requirements.txt``` installs packages 
 3. ```python3 start.py``` runs program
 
-### Ideas
-- stage_1: 
-    - [x] GUI
-    - [x] Read and write files
-
-- stage_2: 
-    - [ ] Rich text editor
-    - [ ] Project folder navigation
-    - [ ] Ask user to save before exiting
-    - [ ] Write tests
-
-- stage_3:
-    - [ ] Shared documents (Real-time)
-    - [ ] Database
-    - [ ] Shortcut keys & Code generation (E.g. Java getters)
-    - [ ] Show line numbers
-    - [ ] Users
+board: https://github.com/benjaminhr/notepad/projects/1
