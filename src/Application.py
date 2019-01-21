@@ -3,40 +3,22 @@ from tkinter import messagebox
 from .File import File
 import atexit
 
-class App:
-
-  def __init__(self):
-    self.filePath = None
-
-  @property
-  def filePath(self):
-    return self.__filePath
-
-  @filePath.setter
-  def filePath(self, filePath):
-    self.__filePath = filePath
-
-class GUI(App, Frame):
-
+class App(Frame): 
   def __init__(self, window=None):
-    Frame.__init__(self,window)
-    App.__init__(self)
+    Frame.__init__(self, window)
 
+    self.filePath = None
     self.grid(sticky=N+S+E+W)
-
     self.window = self.winfo_toplevel()
     self.window.title("Notepad")
     self.window.geometry("550x700")
-    self.window.attributes("-topmost", True)
     self.window.protocol("WM_DELETE_WINDOW", exit)
 
     self.menu = Menu(self.window, bd=0)
     self.window['menu'] = self.menu
-    self.__setupMenu()
-
     self.textbox = Text(self)
+    self.__setupMenu()
     self.__setupTextbox()
-
     self.__setupLayout()
 
     atexit.register(self.saveBeforeExit)
@@ -69,10 +51,10 @@ class GUI(App, Frame):
       font = "{Courier} 16",
       foreground = "white",
       background = "black",
-      insertbackground = "white", # cursor
-      selectforeground = "grey", # selection
+      insertbackground = "white", 
+      selectforeground = "grey",
       selectbackground = "#008000",
-      wrap = WORD, # use word wrapping
+      wrap = WORD,
       width = 64,
       undo = True
     )
@@ -110,5 +92,5 @@ class GUI(App, Frame):
         print("Exited without saving")
 
 def start():
-  app = GUI()
+  app = App()
   app.mainloop()

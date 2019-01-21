@@ -44,7 +44,7 @@ class File:
       with open(path, 'r') as uploadedFile:
         contents = uploadedFile.read()
         app.text = contents
-        print ("Reading file  " + path)
+        print("Reading file  " + path)
 
         head, strippedPath = os.path.split(path)
         app.setWindowTitle(strippedPath)
@@ -54,6 +54,8 @@ class File:
 
     except FileNotFoundError as e0:
       print("Error", "Could not open file.",e0)
+
     except Exception as e1:
-      print("ERROR","Unpredicted Error")
+      messagebox.showerror("Error", "Could not open file.")
+      print("ERROR", "Could not open file.")
       print(e1, file=sys.stderr)
