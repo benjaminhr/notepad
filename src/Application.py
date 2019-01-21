@@ -1,7 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
 from .File import File
+from random import randint
 import atexit
+import subprocess
 
 class App(Frame): 
   def __init__(self, window=None):
@@ -11,7 +13,7 @@ class App(Frame):
     self.grid(sticky=N+S+E+W)
     self.window = self.winfo_toplevel()
     self.window.title("Notepad")
-    self.window.geometry("550x700")
+    self.window.geometry("550x700+%d+%d" % (randint(100, 400), randint(100, 300)))
     self.window.protocol("WM_DELETE_WINDOW", exit)
 
     self.menu = Menu(self.window, bd=0)
@@ -35,6 +37,7 @@ class App(Frame):
 
   def __setupMenu(self):
     file = Menu(self.menu, tearoff=0, bd=0, activeborderwidth=0)
+    file.add_command(label = 'New File', command = lambda: subprocess.Popen(["python3", "start.py"]))
     file.add_command(label = 'Open', command = lambda: File.open(self))
     file.add_command(label = 'Save', command = lambda: File.save(self))
     file.add_command(label = 'Save As', command = lambda: File.saveAs(self))
@@ -90,6 +93,7 @@ class App(Frame):
         File.save(self)
       else:
         print("Exited without saving")
+
 
 def start():
   app = App()
