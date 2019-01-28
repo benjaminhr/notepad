@@ -1,9 +1,11 @@
 from tkinter import *
 from tkinter import messagebox
 from .File import File
+from .FileMenu import FileMenu
 from random import randint
 import atexit
 import subprocess
+import sys
 
 class App(Frame): 
   def __init__(self, window=None):
@@ -13,7 +15,7 @@ class App(Frame):
     self.grid(sticky=N+S+E+W)
     self.window = self.winfo_toplevel()
     self.window.title("Notepad")
-    self.window.geometry("550x700+%d+%d" % (randint(100, 400), randint(100, 300)))
+    self.window.geometry("950x800+%d+%d" % (randint(100, 400), randint(100, 300)))
     self.window.protocol("WM_DELETE_WINDOW", exit)
 
     self.menu = Menu(self.window, bd=0)
@@ -22,22 +24,20 @@ class App(Frame):
     self.__setupMenu()
     self.__setupTextbox()
     self.__setupLayout()
+    self.__setupFileMenu()
 
     atexit.register(self.saveBeforeExit)
 
   def __setupLayout(self):
     self.window.columnconfigure(0, weight=1)
     self.window.rowconfigure(0, weight=1)
-
-    self.columnconfigure(0,weight=1)
+    self.columnconfigure(0, weight=0)
+    self.columnconfigure(1, weight=1)
     self.rowconfigure(0, weight=1)
-
-    self.textbox.columnconfigure(0, weight=1)
-    self.textbox.rowconfigure(0, weight=1)
-
+    
   def __setupMenu(self):
     file = Menu(self.menu, tearoff=0, bd=0, activeborderwidth=0)
-    file.add_command(label = 'New File', command = lambda: subprocess.Popen(["python3", "start.py"]))
+    file.add_command(label = 'New File', command = self.createNewWindow)
     file.add_command(label = 'Open', command = lambda: File.open(self))
     file.add_command(label = 'Save', command = lambda: File.save(self))
     file.add_command(label = 'Save As', command = lambda: File.saveAs(self))
@@ -45,7 +45,8 @@ class App(Frame):
     self.menu.add_cascade(label = 'File', menu = file)
 
   def __setupTextbox(self):
-    self.textbox.grid(row=0, column=0, sticky=N+E+S+W)
+    self.textbox.columnconfigure(1)
+    self.textbox.grid(row=0, column=1, sticky=N+S+E+W)
     self.textbox.config(
       padx = 10,
       pady = 10,
@@ -58,12 +59,18 @@ class App(Frame):
       selectforeground = "grey",
       selectbackground = "#008000",
       wrap = WORD,
-      width = 64,
-      undo = True
+      undo = True,
+      insertwidth = 5
     )
+
+  def __setupFileMenu(self):
+    fileMenu = FileMenu(self.window)
 
   def setWindowTitle(self, title):
     self.window.title(title)
+  
+  def createNewWindow(self):
+    subprocess.Popen(["python3", "start.py"])
 
   @property
   def text(self):
