@@ -1,32 +1,44 @@
 import sys
 import random
-from PySide2 import QtCore, QtWidgets, QtGui
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QAction
 
-class MyWidget(QtWidgets.QWidget):
+class App(QMainWindow):
   def __init__(self):
     super().__init__()
 
-    self.hello = ["Hallo Welt", "Hei maailma", "Hola Mundo", "Привет мир"]
+    self.setWindowTitle("LOLPad")
+    self.setGeometry(0, 0, 640, 480)
+   
+    mainMenu = self.menuBar()
+    self.__genFileMenu(mainMenu)
 
-    self.button = QtWidgets.QPushButton("Click me!")
-    self.text = QtWidgets.QLabel("Hello World")
-    self.text.setAlignment(QtCore.Qt.AlignCenter)
+    self.show()
 
-    self.layout = QtWidgets.QVBoxLayout()
-    self.layout.addWidget(self.text)
-    self.layout.addWidget(self.button)
-    self.setLayout(self.layout)
+  def __genFileMenu(self, mainMenu):
+    fileMenu = mainMenu.addMenu('File')
+    newFileButton = QAction('New File', self)
+    newFileButton.setShortcut('Ctrl+N')
+    fileMenu.addAction(newFileButton)
 
-    self.button.clicked.connect(self.magic)
+    openFileButton = QAction('Open', self)
+    openFileButton.setShortcut('Ctrl+O')
+    fileMenu.addAction(openFileButton)
 
-  def magic(self):
-    self.text.setText(random.choice(self.hello))
+    saveFileButton = QAction('Save', self)
+    saveFileButton.setShortcut('Ctrl+S')
+    fileMenu.addAction(saveFileButton)
+
+    saveAsFileButton = QAction('Save As', self)
+    saveAsFileButton.setShortcut('Ctrl+Shift+S')
+    fileMenu.addAction(saveAsFileButton)
+
+    exitButton = QAction('Exit', self)
+    exitButton.setShortcut('Ctrl+Q')
+    exitButton.setStatusTip('Exit application')
+    exitButton.triggered.connect(self.close)
+    fileMenu.addAction(exitButton)
 
 if __name__ == "__main__":
-  app = QtWidgets.QApplication([])
-
-  widget = MyWidget()
-  widget.resize(800, 600)
-  widget.show()
-
+  app = QApplication(sys.argv)
+  ex = App()
   sys.exit(app.exec_())
