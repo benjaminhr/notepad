@@ -1,6 +1,6 @@
 import sys
 import random
-from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QAction
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QAction, QTabWidget, QVBoxLayout
 
 class App(QMainWindow):
   def __init__(self):
@@ -8,9 +8,12 @@ class App(QMainWindow):
 
     self.setWindowTitle("LOLPad")
     self.setGeometry(0, 0, 640, 480)
-   
+
     mainMenu = self.menuBar()
     self.__genFileMenu(mainMenu)
+
+    self.tabs = TextTabs(self)
+    self.setCentralWidget(self.tabs)
 
     self.show()
 
@@ -37,6 +40,19 @@ class App(QMainWindow):
     exitButton.setStatusTip('Exit application')
     exitButton.triggered.connect(self.close)
     fileMenu.addAction(exitButton)
+
+class TextTabs(QWidget):
+  def __init__(self, parent):
+    super(QWidget, self).__init__(parent)
+    self.layout = QVBoxLayout(self)
+   
+    self.tabs = QTabWidget()
+    self.tabs.addTab(QWidget(), 'Tab 1')
+    self.tabs.addTab(QWidget(), 'Tab 2')
+    self.tabs.resize(640,480)
+
+    self.layout.addWidget(self.tabs)
+    self.setLayout(self.layout)
 
 if __name__ == "__main__":
   app = QApplication(sys.argv)
